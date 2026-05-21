@@ -1,4 +1,4 @@
 ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD_HASH=pbkdf2$210000$replace_salt$replace_hash
+ADMIN_PASSWORD_HASH=pbkdf2$100000$replace_salt$replace_hash
 JWT_SECRET=replace-with-long-random-string
 ENCRYPTION_KEY=replace-with-base64-32-byte-key
