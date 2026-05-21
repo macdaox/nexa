@@ -4,5 +4,5 @@ pages_build_output_dir = "dist"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "asset-dashboard"
-database_id = "replace-with-cloudflare-d1-database-id"
+database_name = "nexa"
+database_id = "18608fa3-0c9a-4a4e-8d63-16f5499936cc"

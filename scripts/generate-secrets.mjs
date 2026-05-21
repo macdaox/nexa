@@ -1,6 +1,6 @@
 import { webcrypto } from 'node:crypto'
 
-globalThis.crypto = webcrypto
+const crypto = globalThis.crypto ?? webcrypto
 
 const password = process.argv[2]
 
