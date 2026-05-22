@@ -59,7 +59,6 @@
 }
 
 .muted,
-.topbar span,
 .asset-row span,
 .balance-row span,
 .card-main span,
@@ -110,7 +109,6 @@ button {
 
 .primary-btn,
 .ghost-btn,
-.plain-icon-btn,
 .icon-btn,
 .nav-btn,
 .nav-action,
@@ -161,7 +159,12 @@ button {
   justify-self: start;
 }
 
-.plain-icon-btn,
+.logout-btn {
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
 .icon-btn,
 .filter-btn,
 .scan-btn {
@@ -169,11 +172,6 @@ button {
   place-items: center;
   color: var(--text);
   background: transparent;
-}
-
-.plain-icon-btn {
-  width: 36px;
-  height: 36px;
 }
 
 .icon-btn {
@@ -202,26 +200,6 @@ button {
   background: var(--bg);
 }
 
-.topbar {
-  min-height: 54px;
-  display: grid;
-  grid-template-columns: 36px minmax(0, 1fr) 36px;
-  gap: 10px;
-  align-items: center;
-  padding: calc(6px + env(safe-area-inset-top)) 16px 4px;
-}
-
-.topbar div {
-  min-width: 0;
-  display: grid;
-  gap: 2px;
-}
-
-.topbar strong {
-  color: var(--text);
-  font-size: 16px;
-}
-
 .content {
   min-width: 0;
   flex: 1 1 auto;
@@ -230,7 +208,7 @@ button {
   overflow-x: hidden;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  padding: 4px 16px 82px;
+  padding: calc(8px + env(safe-area-inset-top)) 16px 82px;
 }
 
 .page-stack {
@@ -684,7 +662,6 @@ button {
   box-shadow: 0 0 0 5px #000;
 }
 
-.plain-icon-btn svg,
 .icon-btn svg,
 .filter-btn svg,
 .scan-btn svg {

@@ -107,7 +107,7 @@ function App() {
   return (
     <Shell route={route} onLogout={onLogout}>
       {route.name === 'dashboard' && <DashboardPage />}
-      {route.name === 'settings' && <SettingsPage />}
+      {route.name === 'settings' && <SettingsPage onLogout={onLogout} />}
       {route.name === 'exchange' && <ExchangePage id={route.id} />}
     </Shell>
   )
@@ -175,29 +175,9 @@ function LoginPage({ onLogin }: { onLogin: () => void }) {
   )
 }
 
-function Shell({
-  children,
-  onLogout,
-  route,
-}: {
-  children: ReactNode
-  onLogout: () => void
-  route: Route
-}) {
+function Shell({ children, route }: { children: ReactNode; onLogout: () => void; route: Route }) {
   return (
     <div className="app-shell">
-      <header className="topbar">
-        <button className="plain-icon-btn" onClick={() => navigate('/dashboard')} title="总览" type="button">
-          <Wallet size={22} />
-        </button>
-        <div>
-          <strong>{route.name === 'settings' ? '用户中心' : route.name === 'exchange' ? '交易所' : '资产'}</strong>
-          <span>只读资产看板</span>
-        </div>
-        <button className="plain-icon-btn" onClick={onLogout} title="退出登录" type="button">
-          <LogOut size={20} />
-        </button>
-      </header>
       <main className="content">{children}</main>
       <nav className="bottom-nav">
         <NavButton active={route.name === 'dashboard'} icon={<BarChart3 size={22} />} label="总览" path="/dashboard" />
@@ -428,7 +408,7 @@ function ExchangePage({ id }: { id: string }) {
   )
 }
 
-function SettingsPage() {
+function SettingsPage({ onLogout }: { onLogout: () => void }) {
   const [accounts, setAccounts] = useState<ExchangeAccount[]>([])
   const [exchange, setExchange] = useState<ExchangeType>('binance')
   const [name, setName] = useState('')
@@ -504,6 +484,10 @@ function SettingsPage() {
     <section className="page-stack">
       <div className="section-heading">
         <h2>用户中心</h2>
+        <button className="ghost-btn logout-btn" onClick={onLogout} type="button">
+          <LogOut size={16} />
+          退出
+        </button>
       </div>
 
       <div className="security-note">
