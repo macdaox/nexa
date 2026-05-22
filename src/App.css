@@ -172,14 +172,14 @@ button {
 }
 
 .plain-icon-btn {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
 }
 
 .icon-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   background: #262626;
 }
 
@@ -190,21 +190,25 @@ button {
 .app-shell {
   width: 100%;
   max-width: 480px;
-  height: 100dvh;
+  height: auto;
   margin: 0 auto;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  position: fixed;
+  inset: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   background: var(--bg);
 }
 
 .topbar {
-  min-height: 64px;
+  min-height: 54px;
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 42px;
-  gap: 12px;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+  gap: 10px;
   align-items: center;
-  padding: calc(8px + env(safe-area-inset-top)) 18px 6px;
+  padding: calc(6px + env(safe-area-inset-top)) 16px 4px;
 }
 
 .topbar div {
@@ -215,29 +219,30 @@ button {
 
 .topbar strong {
   color: var(--text);
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .content {
   min-width: 0;
+  flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  padding: 8px 18px 18px;
+  padding: 4px 16px calc(84px + env(safe-area-inset-bottom));
 }
 
 .page-stack {
-  padding-bottom: 18px;
+  padding-bottom: 12px;
 }
 
 .asset-hero {
   position: relative;
   min-width: 0;
   display: grid;
-  gap: 18px;
-  padding: 18px 0 8px;
+  gap: 12px;
+  padding: 10px 0 4px;
   overflow: hidden;
 }
 
@@ -253,51 +258,51 @@ button {
   align-items: center;
   gap: 6px;
   color: var(--muted);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 800;
 }
 
 .hero-balance {
   display: flex;
   align-items: baseline;
-  gap: 10px;
-  margin-top: 16px;
+  gap: 8px;
+  margin-top: 10px;
   min-width: 0;
 }
 
 .hero-balance strong {
   color: var(--text);
-  font-size: clamp(54px, 18vw, 78px);
-  line-height: 0.88;
+  font-size: clamp(42px, 14vw, 60px);
+  line-height: 0.95;
   letter-spacing: 0;
   white-space: nowrap;
 }
 
 .today-profit {
-  min-height: 32px;
+  min-height: 28px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin-top: 18px;
+  margin-top: 10px;
   padding: 0;
   color: #b9b9bd;
   background: transparent;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 800;
 }
 
 .scan-btn {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   flex: 0 0 auto;
 }
 
 .hero-pattern {
   position: absolute;
-  right: 8px;
-  bottom: 18px;
-  width: 92px;
-  height: 54px;
+  right: 4px;
+  bottom: 10px;
+  width: 74px;
+  height: 42px;
   opacity: 0.9;
   background-image: radial-gradient(var(--lime) 1.3px, transparent 1.3px);
   background-size: 8px 8px;
@@ -323,11 +328,11 @@ button {
 
 .segmented button {
   display: none;
-  min-height: 34px;
+  min-height: 28px;
   padding: 0 2px;
   color: var(--text);
   background: transparent;
-  font-size: clamp(24px, 8vw, 36px);
+  font-size: clamp(18px, 6vw, 26px);
   font-weight: 900;
 }
 
@@ -349,21 +354,21 @@ button {
 .quick-actions {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: 6px;
 }
 
 .quick-action {
   min-width: 0;
   display: grid;
   justify-items: center;
-  gap: 10px;
+  gap: 8px;
   color: var(--text);
   background: transparent;
 }
 
 .quick-action span {
-  width: clamp(62px, 18vw, 72px);
+  width: clamp(48px, 14vw, 58px);
   aspect-ratio: 1;
   display: grid;
   place-items: center;
@@ -373,18 +378,18 @@ button {
 }
 
 .quick-action strong {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .dex-banner {
   width: 100%;
   min-width: 0;
-  min-height: 82px;
+  min-height: 66px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
-  border-radius: 24px;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 20px;
   color: var(--text);
   text-align: left;
   background: var(--panel);
@@ -398,13 +403,13 @@ button {
 
 .dex-banner small {
   color: #a9a9ae;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 800;
 }
 
 .dex-banner strong {
   color: var(--text);
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1.15;
 }
 
@@ -414,23 +419,23 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 22px;
+  margin-top: 16px;
 }
 
 .section-heading h2,
 .section-heading h3 {
-  font-size: 26px;
+  font-size: 22px;
   line-height: 1.1;
 }
 
 .filter-btn {
-  width: 42px;
-  height: 42px;
+  width: 34px;
+  height: 34px;
 }
 
 .list-heading-note {
   flex: 0 0 auto;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -439,7 +444,7 @@ button {
   min-width: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
   overflow: visible;
   padding-bottom: 4px;
 }
@@ -458,8 +463,8 @@ button {
 .exchange-card {
   min-width: 0;
   display: grid;
-  gap: 14px;
-  padding: 16px;
+  gap: 10px;
+  padding: 14px;
 }
 
 .card-main {
@@ -496,7 +501,7 @@ button {
 
 .card-value {
   color: var(--text);
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 900;
 }
 
@@ -507,12 +512,12 @@ button {
 .asset-row,
 .balance-row {
   min-width: 0;
-  min-height: 74px;
+  min-height: 62px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 2px;
+  padding: 10px 2px;
   background: var(--bg);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -521,7 +526,7 @@ button {
 .balance-row b {
   flex: 0 0 auto;
   color: var(--text);
-  font-size: 22px;
+  font-size: 18px;
   text-align: right;
 }
 
@@ -530,15 +535,15 @@ button {
 }
 
 .coin-dot {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   flex: 0 0 auto;
   display: inline-grid;
   place-items: center;
   border-radius: 50%;
   color: #fff;
   background: #1d7bea;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 900;
 }
 
@@ -631,28 +636,33 @@ button {
 }
 
 .bottom-nav {
-  width: 100%;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 20;
+  width: min(100%, 480px);
   min-width: 0;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: end;
   gap: 4px;
-  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+  padding: 4px 8px max(4px, env(safe-area-inset-bottom));
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(0, 0, 0, 0.96);
   box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.55);
+  transform: translateX(-50%);
 }
 
 .nav-btn {
   min-width: 0;
-  min-height: 54px;
+  min-height: 46px;
   display: grid;
   justify-items: center;
   align-content: center;
   gap: 4px;
   color: #8a8a8f;
   background: transparent;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .nav-btn.active {
@@ -661,16 +671,44 @@ button {
 }
 
 .nav-action {
-  width: 64px;
-  height: 64px;
+  width: 50px;
+  height: 50px;
   justify-self: center;
   display: grid;
   place-items: center;
   border-radius: 50%;
   color: #050505;
   background: #f4f4f5;
-  transform: translateY(-16px);
-  box-shadow: 0 0 0 7px #000;
+  transform: translateY(-8px);
+  box-shadow: 0 0 0 5px #000;
+}
+
+.plain-icon-btn svg,
+.icon-btn svg,
+.filter-btn svg,
+.scan-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.quick-action svg {
+  width: 23px;
+  height: 23px;
+}
+
+.dex-banner > svg {
+  width: 23px;
+  height: 23px;
+}
+
+.nav-btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+.nav-action svg {
+  width: 25px;
+  height: 25px;
 }
 
 .spin {
@@ -693,10 +731,10 @@ button {
   }
 
   .quick-action strong {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .dex-banner strong {
-    font-size: 20px;
+    font-size: 17px;
   }
 }
