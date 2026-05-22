@@ -1,5 +1,6 @@
 import {
   AlertCircle,
+  ArrowLeftRight,
   BarChart3,
   CheckCircle2,
   ChevronRight,
@@ -8,6 +9,7 @@ import {
   KeyRound,
   Loader2,
   LogOut,
+  Plus,
   RefreshCw,
   Save,
   Settings,
@@ -32,12 +34,6 @@ type Route =
   | { name: 'dashboard' }
   | { name: 'settings' }
   | { name: 'exchange'; id: string }
-
-const currencySymbols: Record<Currency, string> = {
-  USDT: 'USDT',
-  USD: 'USD',
-  CNY: 'CNY',
-}
 
 function parseRoute(): Route {
   const { pathname } = window.location
@@ -191,21 +187,26 @@ function Shell({
   return (
     <div className="app-shell">
       <header className="topbar">
-        <button className="icon-btn" onClick={() => navigate('/dashboard')} title="总览" type="button">
+        <button className="plain-icon-btn" onClick={() => navigate('/dashboard')} title="总览" type="button">
           <Wallet size={22} />
         </button>
         <div>
-          <strong>资产看板</strong>
-          <span>Read Only</span>
+          <strong>{route.name === 'settings' ? '用户中心' : route.name === 'exchange' ? '交易所' : '资产'}</strong>
+          <span>只读资产看板</span>
         </div>
-        <button className="icon-btn" onClick={onLogout} title="退出登录" type="button">
+        <button className="plain-icon-btn" onClick={onLogout} title="退出登录" type="button">
           <LogOut size={20} />
         </button>
       </header>
       <main className="content">{children}</main>
       <nav className="bottom-nav">
-        <NavButton active={route.name === 'dashboard'} icon={<BarChart3 size={20} />} label="总览" path="/dashboard" />
-        <NavButton active={route.name === 'settings'} icon={<Settings size={20} />} label="设置" path="/settings" />
+        <NavButton active={route.name === 'dashboard'} icon={<BarChart3 size={22} />} label="总览" path="/dashboard" />
+        <NavButton active={route.name === 'exchange'} icon={<Coins size={22} />} label="资产" path="/dashboard" />
+        <button className="nav-action" onClick={() => navigate('/settings')} type="button" title="添加 API">
+          <Plus size={30} />
+        </button>
+        <NavButton active={false} icon={<RefreshCw size={22} />} label="刷新" path="/dashboard" />
+        <NavButton active={route.name === 'settings'} icon={<Settings size={22} />} label="设置" path="/settings" />
       </nav>
     </div>
   )
@@ -255,33 +256,69 @@ function DashboardPage() {
     }
   }
 
+  const syncAll = async () => {
+    if (!data?.exchanges.length) return
+    setSyncingId('all')
+    try {
+      for (const exchange of data.exchanges) {
+        await api.syncExchange(exchange.id)
+      }
+      await load()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '同步失败')
+    } finally {
+      setSyncingId('')
+    }
+  }
+
   return (
     <section className="page-stack">
-      <div className="hero-band">
-        <div className="hero-row">
+      <div className="asset-hero">
+        <div className="asset-hero-top">
           <div>
-            <span className="eyebrow">总资产</span>
-            <h2>
-              {data ? formatMoney(data.totalDisplayValue, currency) : '0.00'} {currencySymbols[currency]}
-            </h2>
+            <span className="hero-label">总资产估值</span>
+            <div className="hero-balance">
+              <strong>{data ? formatMoney(data.totalDisplayValue, currency) : '0.00'}</strong>
+              <CurrencyPicker value={currency} onChange={setCurrency} />
+            </div>
+            <button className="today-profit" type="button">
+              今日收益 $0.00 (0.00%) <ChevronRight size={18} />
+            </button>
           </div>
-          <CurrencyPicker value={currency} onChange={setCurrency} />
+          <button className="scan-btn" onClick={() => navigate('/settings')} title="管理 API" type="button">
+            <Settings size={25} />
+          </button>
         </div>
+        <div className="hero-pattern" aria-hidden="true" />
         <p className="muted">最后同步：{data?.lastSyncedAt ? new Date(data.lastSyncedAt).toLocaleString() : '尚未同步'}</p>
       </div>
 
       {error && <InlineError message={error} />}
       {loading && <LoadingLine />}
 
+      <div className="quick-actions">
+        <QuickAction icon={<RefreshCw size={28} />} label="刷新" onClick={syncAll} />
+        <QuickAction icon={<Plus size={30} />} label="添加" onClick={() => navigate('/settings')} />
+        <QuickAction icon={<ArrowLeftRight size={30} />} label="切换" onClick={() => setCurrency(currency === 'USDT' ? 'USD' : currency === 'USD' ? 'CNY' : 'USDT')} />
+        <QuickAction icon={<Settings size={29} />} label="管理" onClick={() => navigate('/settings')} />
+      </div>
+
+      <button className="dex-banner" onClick={() => navigate('/settings')} type="button">
+        <Wallet size={28} />
+        <span>
+          <small>交易所 API 管理</small>
+          <strong>启用余额查看功能</strong>
+        </span>
+      </button>
+
       <div className="section-heading">
-        <h3>交易所</h3>
-        <button className="ghost-btn" onClick={() => navigate('/settings')} type="button">
+        <h3>资产组合</h3>
+        <button className="filter-btn" onClick={() => navigate('/settings')} type="button" title="管理">
           <Settings size={16} />
-          管理
         </button>
       </div>
 
-      <div className="card-grid">
+      <div className="portfolio-strip">
         {data?.exchanges.map((item) => (
           <article className="exchange-card" key={item.id}>
             <button className="card-main" onClick={() => navigate(`/exchanges/${item.id}`)} type="button">
@@ -305,7 +342,8 @@ function DashboardPage() {
       {!loading && data?.exchanges.length === 0 && <EmptyState text="还没有添加交易所 API，请到设置页添加。" />}
 
       <div className="section-heading">
-        <h3>币种汇总</h3>
+        <h3>代币</h3>
+        <span className="list-heading-note">价值/现货收益</span>
       </div>
       <div className="asset-list">
         {data?.assets.map((asset) => (
@@ -322,6 +360,15 @@ function DashboardPage() {
         ))}
       </div>
     </section>
+  )
+}
+
+function QuickAction({ icon, label, onClick }: { icon: ReactNode; label: string; onClick: () => void }) {
+  return (
+    <button className="quick-action" onClick={onClick} type="button">
+      <span>{icon}</span>
+      <strong>{label}</strong>
+    </button>
   )
 }
 
